@@ -65,7 +65,7 @@ publishing {
     repositories {
         maven {
             name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/stadiamaps/valhalla-openapi")
+            url = uri("https://maven.pkg.github.com/rallista/valhalla-openapi-models-kotlin")
             credentials {
                 username = System.getenv("GITHUB_ACTOR")
                 password = System.getenv("GITHUB_TOKEN")
