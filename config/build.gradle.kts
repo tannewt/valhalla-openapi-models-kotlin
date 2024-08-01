@@ -31,7 +31,7 @@ tasks.test {
 
 swaggerSources {
   register("valhalla") {
-      val openApiFile = file("../openapi.yaml")
+      val openApiFile = file("../openapi-config.yaml")
       require(openApiFile.exists()) { "OpenAPI spec file not found: $openApiFile" }
 
       setInputFile(openApiFile)
@@ -40,7 +40,7 @@ swaggerSources {
           components = listOf("models")
           additionalProperties = mapOf(
               "groupId" to "com.valhalla",
-              "packageName" to "com.valhalla.api"
+              "packageName" to "com.valhalla.config"
           )
           rawOptions = listOf(
               "--skip-validate-spec"
@@ -80,7 +80,7 @@ publishing {
             from(components["java"])
 
             groupId = "com.valhalla"
-            artifactId = "api"
+            artifactId = "config"
             version = libraryVersion
         }
     }
