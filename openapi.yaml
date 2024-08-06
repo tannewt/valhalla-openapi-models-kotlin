@@ -689,6 +689,27 @@ components:
           description: >-
             The level of directional narrative to include. Locations and times will always be returned,
             but narrative generation verbosity can be controlled with this parameter.
+        format:
+          type: string
+          enum:
+            - json
+            - gpx
+            - osrm
+            - pbf
+        shape_format:
+          type: string
+          enum:
+            - polyline6
+            - polyline5
+            - geojson
+            - no_shape
+          default: polyline6
+        banner_instructions:
+          type: boolean
+        voice_instructions:
+          type: boolean
+        alternates:
+          type: number
     distanceUnit:
       type: string
       enum:
