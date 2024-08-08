@@ -3,6 +3,7 @@ import kotlin.test.Test
 import kotlin.test.assertEquals
 
 class AdditionalDataTest {
+
   @Test
   fun testDefault() {
     val additionalData = AdditionalData()

@@ -5,7 +5,7 @@ plugins {
 rootProject.name = "valhalla-api-kotlin"
 
 gradle.beforeProject {
-    extensions.extraProperties["libraryVersion"] = "0.0.3"
+    extensions.extraProperties["libraryVersion"] = "0.0.4"
 }
 
 include("client")
