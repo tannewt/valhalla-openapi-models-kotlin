@@ -709,7 +709,7 @@ components:
         voice_instructions:
           type: boolean
         alternates:
-          type: number
+          type: integer
     distanceUnit:
       type: string
       enum:
