@@ -1,17 +1,18 @@
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import com.valhalla.config.models.ValhallaConfig
+import io.kotest.assertions.json.shouldMatchJsonResource
 import kotlin.test.Test
-import kotlin.test.assertNotNull
 
-class MoshiAdapterTest {
+class ValhallaConfigTest {
 
   private val moshi: Moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 
   @Test
-  fun testEncode() {
+  fun testDefault() {
     val config = ValhallaConfigBuilder.DEFAULT
-    val encoded = moshi.adapter(ValhallaConfig::class.java).toJson(config)
-    assertNotNull(encoded)
+    val configJson = moshi.adapter(ValhallaConfig::class.java).toJson(config)
+
+    configJson.shouldMatchJsonResource("/default-config.json")
   }
 }

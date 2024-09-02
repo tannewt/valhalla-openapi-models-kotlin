@@ -6,7 +6,40 @@ info:
     name: Valhalla
     url: 'https://github.com/valhalla/valhalla'
 components:
-  schemas: 
+  schemas:
+    logging:
+      type: object
+      properties:
+        color:
+          type: boolean
+          default: true
+        file_name:
+          type: string
+          default: path_to_some_file.log
+        type:
+          type: string
+          default: std_out
+    valhalla_config:
+      type: object
+      properties:
+        additional_data:
+          $ref: '#/components/schemas/additional_data'
+        httpd:
+          $ref: '#/components/schemas/httpd'
+        loki:
+          $ref: '#/components/schemas/loki'
+        meili:
+          $ref: '#/components/schemas/meili'
+        mjolnir:
+          $ref: '#/components/schemas/mjolnir'
+        odin:
+          $ref: '#/components/schemas/odin'
+        service_limits:
+          $ref: '#/components/schemas/service_limits'
+        statsd:
+          $ref: '#/components/schemas/statsd'
+        thor:
+          $ref: '#/components/schemas/thor'
     additional_data: 
       type: object
       properties: 
@@ -57,16 +90,17 @@ components:
           ]
         logging: 
           type: object
-          properties: 
-            color: 
+          properties:
+            color:
               type: boolean
-            file_name: 
+              default: true
+            file_name:
               type: string
               default: path_to_some_file.log
-            long_request: 
+            long_request:
               type: integer
               default: 100
-            type: 
+            type:
               type: string
               default: std_out
         service: 
@@ -101,6 +135,7 @@ components:
               default: 5
         use_connectivity: 
           type: boolean
+          default: true
     meili: 
       type: object
       properties: 
@@ -134,7 +169,7 @@ components:
             "max_route_distance_factor",
             "max_route_time_factor"
           ]
-        default: 
+        default:
           type: object
           properties: 
             beta: 
@@ -145,6 +180,7 @@ components:
               default: 2000
             geometry: 
               type: boolean
+              default: false
             gps_accuracy: 
               type: integer
               default: 5
@@ -162,6 +198,7 @@ components:
               default: 100
             route: 
               type: boolean
+              default: true
             search_radius: 
               type: integer
               default: 50
@@ -182,16 +219,7 @@ components:
               type: integer
               default: 500
         logging: 
-          type: object
-          properties: 
-            color: 
-              type: boolean
-            file_name: 
-              type: string
-              default: path_to_some_file.log
-            type: 
-              type: string
-              default: std_out
+          $ref: '#/components/schemas/logging'
         mode: 
           type: string
           default: auto
@@ -218,6 +246,7 @@ components:
               default: ipc:///tmp/meili
         verbose: 
           type: boolean
+          default: false
     mjolnir: 
       type: object
       properties: 
@@ -229,54 +258,63 @@ components:
           properties: 
             allow_alt_name: 
               type: boolean
+              default: false
             apply_country_overrides: 
               type: boolean
+              default: true
             infer_internal_intersections: 
               type: boolean
+              default: true
             infer_turn_channels: 
               type: boolean
+              default: true
             scan_tar: 
               type: boolean
+              default: false
             use_admin_db: 
               type: boolean
+              default: true
             use_direction_on_ways: 
               type: boolean
+              default: false
             use_rest_area: 
               type: boolean
+              default: false
             use_urban_tag: 
               type: boolean
+              default: false
         global_synchronized_cache: 
           type: boolean
+          default: false
         hierarchy: 
           type: boolean
+          default: true
         id_table_size: 
           type: integer
           default: 1300000000
         import_bike_share_stations: 
           type: boolean
+          default: false
         include_bicycle: 
           type: boolean
+          default: true
         include_construction: 
           type: boolean
+          default: false
         include_driveways: 
           type: boolean
+          default: true
         include_driving: 
           type: boolean
+          default: true
         include_pedestrian: 
           type: boolean
-        logging: 
-          type: object
-          properties: 
-            color: 
-              type: boolean
-            file_name: 
-              type: string
-              default: path_to_some_file.log
-            type: 
-              type: string
-              default: std_out
+          default: true
+        logging:
+          $ref: '#/components/schemas/logging'
         lru_mem_cache_hard_control: 
           type: boolean
+          default: false
         max_cache_size: 
           type: integer
           default: 1000000000
@@ -285,49 +323,45 @@ components:
           default: 1
         reclassify_links: 
           type: boolean
+          default: true
         shortcuts: 
           type: boolean
+          default: true
         tile_dir: 
           type: string
-          format: nullable
+          default: ""
         tile_extract: 
           type: string
-          default: /data/user/0/com.valhalla.valhalla.test/files/valhalla_tiles.tar
-        timezone: 
+          default: ""
+        timezone:
           type: string
           default: timezones.sqlite
         traffic_extract: 
           type: string
-          default: 
+          default: ""
         transit_dir: 
           type: string
-          default: 
+          default: ""
         transit_feeds_dir: 
           type: string
-          default: /data/valhalla/transit_feeds
+          default: ""
         use_lru_mem_cache: 
           type: boolean
+          default: false
         use_simple_mem_cache: 
           type: boolean
+          default: false
     odin: 
       type: object
-      properties: 
-        logging: 
-          type: object
-          properties: 
-            color: 
-              type: boolean
-            file_name: 
-              type: string
-              default: path_to_some_file.log
-            type: 
-              type: string
-              default: std_out
+      properties:
+        logging:
+          $ref: '#/components/schemas/logging'
         markup_formatter: 
           type: object
           properties: 
             markup_enabled: 
               type: boolean
+              default: false
             phoneme_format: 
               type: string
               default: <TEXTUAL_STRING> (<span class=<QUOTES>phoneme<QUOTES>>/<VERBAL_STRING>/</span>)
@@ -528,6 +562,7 @@ components:
           properties: 
             allow_verbose: 
               type: boolean
+              default: false
         taxi: 
           type: object
           properties: 
@@ -608,13 +643,16 @@ components:
       properties: 
         clear_reserved_memory: 
           type: boolean
+          default: false
         extended_search: 
           type: boolean
+          default: false
         logging: 
           type: object
           properties: 
             color: 
               type: boolean
+              default: true
             file_name: 
               type: string
               default: path_to_some_file.log
