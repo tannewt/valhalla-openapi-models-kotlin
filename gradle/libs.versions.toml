@@ -1,0 +1,16 @@
+[versions]
+openapi = "7.5.0"
+moshi = "1.15.1"
+kotest = "5.9.0"
+swagger-codegen = "2.19.2"
+
+[libraries]
+openapi-generator = { group = "org.openapitools", name = "openapi-generator-cli", version.ref = "openapi" }
+moshi-kotlin = { group = "com.squareup.moshi", name = "moshi-kotlin", version.ref = "moshi" }
+moshi-adapters = { group = "com.squareup.moshi", name = "moshi-adapters", version.ref = "moshi" }
+kotest-junit5 = { group = "io.kotest", name = "kotest-runner-junit5", version.ref = "kotest" }
+kotest-assertions-core = { group = "io.kotest", name = "kotest-assertions-core", version.ref = "kotest" }
+kotest-assertions-json = { group = "io.kotest", name = "kotest-assertions-json", version.ref = "kotest" }
+
+[plugins]
+swagger-codegen = { id = "org.hidetake.swagger.generator", version.ref = "swagger-codegen" }

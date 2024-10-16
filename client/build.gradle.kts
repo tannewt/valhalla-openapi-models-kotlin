@@ -2,7 +2,7 @@ import org.hidetake.gradle.swagger.generator.GenerateSwaggerCode
 
 plugins {
     kotlin("jvm")
-    id("org.hidetake.swagger.generator") version "2.19.2"
+    alias(libs.plugins.swagger.codegen)
     `maven-publish`
 }
 
@@ -11,14 +11,15 @@ repositories {
 }
 
 dependencies {
-    swaggerCodegen("org.openapitools:openapi-generator-cli:7.5.0")
+    swaggerCodegen(libs.openapi.generator)
 
-    // Dependencies of the generated code. Check out `build.gradle` in your build folder later if you're curious.
-    val moshiVersion = "1.15.1"
-    implementation("com.squareup.moshi:moshi-kotlin:$moshiVersion")
-    implementation("com.squareup.moshi:moshi-adapters:$moshiVersion")
+    implementation(libs.moshi.kotlin)
+    implementation(libs.moshi.adapters)
 
     testImplementation(kotlin("test"))
+    testImplementation(libs.kotest.junit5)
+    testImplementation(libs.kotest.assertions.core)
+    testImplementation(libs.kotest.assertions.json)
 }
 
 kotlin {
