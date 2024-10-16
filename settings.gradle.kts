@@ -1,11 +1,11 @@
 plugins {
-    kotlin("jvm") version "1.8.22" apply false
+    kotlin("jvm") version "2.0.20" apply false
 }
 
-rootProject.name = "valhalla-openapi-models-kotlin"
+rootProject.name = "valhalla-models"
 
 gradle.beforeProject {
-    extensions.extraProperties["libraryVersion"] = "0.0.6"
+    extensions.extraProperties["libraryVersion"] = "0.0.7"
 }
 
 include("client")

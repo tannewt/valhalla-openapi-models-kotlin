@@ -1,9 +1,12 @@
+import com.vanniktech.maven.publish.JavadocJar
+import com.vanniktech.maven.publish.KotlinJvm
+import com.vanniktech.maven.publish.SonatypeHost
 import org.hidetake.gradle.swagger.generator.GenerateSwaggerCode
 
 plugins {
     kotlin("jvm")
     alias(libs.plugins.swagger.codegen)
-    `maven-publish`
+    alias(libs.plugins.maven.publish)
 }
 
 repositories {
@@ -13,6 +16,7 @@ repositories {
 dependencies {
     swaggerCodegen(libs.openapi.generator)
 
+    // Dependencies of the generated code. Check out `build.gradle` in your build folder later if you're curious.
     implementation(libs.moshi.kotlin)
     implementation(libs.moshi.adapters)
 
@@ -26,13 +30,17 @@ kotlin {
     jvmToolchain(17)
 }
 
+java {
+    withSourcesJar()
+}
+
 tasks.test {
     useJUnitPlatform()
 }
 
 swaggerSources {
   register("valhalla") {
-      val openApiFile = file("../openapi-config.yaml")
+      val openApiFile = file("./openapi.yaml")
       require(openApiFile.exists()) { "OpenAPI spec file not found: $openApiFile" }
 
       setInputFile(openApiFile)
@@ -56,6 +64,10 @@ tasks.compileKotlin.configure {
     dependsOn(tasks.generateSwaggerCode)
 }
 
+tasks.named("sourcesJar") {
+    dependsOn(tasks.generateSwaggerCode)
+}
+
 sourceSets {
     val main by getting
     val valhalla by swaggerSources.getting
@@ -64,25 +76,38 @@ sourceSets {
 
 val libraryVersion: String by extra
 
-publishing {
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/rallista/valhalla-openapi-models-kotlin")
-            credentials {
-                username = System.getenv("GITHUB_ACTOR")
-                password = System.getenv("GITHUB_TOKEN")
+mavenPublishing {
+    publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
+    signAllPublications()
+
+    coordinates("io.github.rallista", "valhalla-models", project.version.toString())
+
+    // TODO: Convert to Dokka?
+    configure(KotlinJvm(sourcesJar = true, javadocJar = JavadocJar.Javadoc()))
+
+    pom {
+        name.set("Valhalla Config Models")
+        description.set("Serializable objects to build Valhalla's config JSON.")
+        url.set(ProjectConfig.PROJECT_URL)
+
+        licenses {
+            license {
+                name.set(ProjectConfig.LICENSE_NAME)
+                url.set(ProjectConfig.LICENSE_URL)
             }
         }
-    }
 
-    publications {
-        register<MavenPublication>("gpr") {
-            from(components["java"])
+        developers {
+            developer {
+                id.set(ProjectConfig.DEVELOPER_ID)
+                name.set(ProjectConfig.DEVELOPER_NAME)
+            }
+        }
 
-            groupId = "com.valhalla"
-            artifactId = "config"
-            version = libraryVersion
+        scm {
+            connection.set(ProjectConfig.SCM_CONNECTION)
+            developerConnection.set(ProjectConfig.SCM_DEV_CONNECTION)
+            url.set(ProjectConfig.SCM_URL)
         }
     }
 }
