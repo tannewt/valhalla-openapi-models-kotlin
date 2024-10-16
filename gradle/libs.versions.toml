@@ -3,6 +3,7 @@ openapi = "7.5.0"
 moshi = "1.15.1"
 kotest = "5.9.0"
 swagger-codegen = "2.19.2"
+maven-publish = "0.29.0"
 
 [libraries]
 openapi-generator = { group = "org.openapitools", name = "openapi-generator-cli", version.ref = "openapi" }
@@ -14,3 +15,4 @@ kotest-assertions-json = { group = "io.kotest", name = "kotest-assertions-json",
 
 [plugins]
 swagger-codegen = { id = "org.hidetake.swagger.generator", version.ref = "swagger-codegen" }
+maven-publish = { id = "com.vanniktech.maven.publish", version.ref = "maven-publish" }
