@@ -81,7 +81,7 @@ mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
 
-    coordinates("io.github.rallista", "valhalla-models", project.version.toString())
+    coordinates("io.github.rallista", "valhalla-models-config", project.version.toString())
 
     // TODO: Convert to Dokka?
     configure(KotlinJvm(sourcesJar = true, javadocJar = JavadocJar.Javadoc()))
