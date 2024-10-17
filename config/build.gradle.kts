@@ -80,6 +80,10 @@ mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
     signAllPublications()
 
+    if (libraryVersion == "unspecified") {
+        throw GradleException("libraryVersion must be specified in settings.gradle.kts")
+    }
+
     coordinates("io.github.rallista", "valhalla-models", libraryVersion)
 
     // TODO: Convert to Dokka?
