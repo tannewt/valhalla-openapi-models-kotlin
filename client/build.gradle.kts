@@ -27,7 +27,7 @@ dependencies {
 }
 
 kotlin {
-    jvmToolchain(17)
+    jvmToolchain(24)
 }
 
 java {
@@ -79,7 +79,11 @@ val libraryVersion: String by extra
 
 mavenPublishing {
     publishToMavenCentral(SonatypeHost.CENTRAL_PORTAL)
-    signAllPublications()
+    
+    // Only sign when publishing to central, not for local publishing
+    if (project.hasProperty("signing.keyId")) {
+        signAllPublications()
+    }
 
     if (libraryVersion == "unspecified") {
         throw GradleException("libraryVersion must be specified in settings.gradle.kts")
